@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+        crossorigin="anonymous">
+	<title>Offers</title>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/dashboard/{accountId}(accountId=${accountId})}">Social Bookstore</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                
+                    <a class="nav-link active" aria-current="page" th:href="@{/dashboard/{accountId}(accountId=${accountId})}">Dashboard</a>
+                    <a class="nav-link active" aria-current="page" th:href="@{/user/{accountId}/offers(accountId=${accountId})}">Offers</a>
+                    <a class="nav-link active" aria-current="page" th:href="@{/user/{accountId}/requests(accountId=${accountId})}">Requests</a>
+                    <a class="nav-link active" aria-current="page" th:href="@{/profile/{accountId}(accountId=${accountId})}">Profile</a>
+                    <a class="nav-link active" aria-current="page" th:href="@{/logout}">Log Out</a>
+                
+            </ul>
+        </div>
+    </div>
+</nav>
+<br />
+<div class="container">
+    <h2 >My offers</h2>
+    <div th:if="${not#lists.isEmpty(offers)}">
+        <table class="table">
+            <tr>
+                <th>Title</th>
+                <th>Authors</th>
+                <th>Categories</th>
+                <th>Summary</th>
+            </tr>
+            <tr th:each ="offer: ${offers}">
+                <td th:text="${offer.title}"></td>
+                <td th:text="${offer.authors}"></td>
+                <td th:text="${offer.category}"></td>
+                <td th:text="${offer.summary}"></td>
+                <td><a th:href="@{/user/{accountId}/offers/delete/{offerId}(accountId=${accountId}, offerId=${offer.id})}" class="btn btn-danger btn-sm mb-3">Delete</a></td>
+            </tr>
+        </table>
+    </div>
+    <div th:unless="${not#lists.isEmpty(offers)}">
+        <p>You have not made any book offers yet</p>
+    </div>
+    
+
+	<hr>
+
+    <p>
+        <a th:href="@{/user/{accountId}/offers/new(accountId=${accountId})}" class="btn btn-primary btn-sm mb-3">New offer</a>
+    	<a th:href="@{/dashboard/{accountId}(accountId=${accountId})}" class="btn btn-danger btn-sm mb-3">Back</a>    
+    </p>
+</div>
+  
+  
+</body>
+</html>
